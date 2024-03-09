@@ -201,3 +201,120 @@ ___________________________________________
   - So you would ask questions to 2 LLM and then decide which LLM give the better or more correct answer
 
 - The leaderboard top LLM are mostly from big companies where the weights are not open source. However, because the base model of LLAMA is opensource a lot of companies are fine tuning there own models based on the base model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___________________________________
+___________________________________
+<br><br>
+<br><br>
+
+
+
+
+
+# LLM Scaling Laws
+- The next word prediction of the neural network aka the performance of the LLM is a smooth, well-behaved, predictable function of:
+- **N**, the number of parameters in the network
+- **D**, the amount of text we train on
+
+  - This means if we train a bigger model with more text we can expect more intelligence/accurance that the next word prediction will improve.
+    - So algorithmic progress is not necessary but it is a very nice bonus
+      - However we can better models "for free" if we get a bigger computer and train a model for longer time
+
+And the trends to not show signs of "topping out"
+
+
+
+<br><br>
+<br><br>
+
+
+
+## General capability
+- So if you would train a bigger model with more data for longer time e.g. chat gpt goes from 3.5 -> 4 then tests will improve
+  - You have different kind of tests for all topics e.g. medicine, coding, biology and those tests will improve each time you train a bigger model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___________________________________
+___________________________________
+<br><br>
+<br><br>
+
+# Tool Usage
+- To provide better user experience and to cut off limits and make the LLM more capable will it will work together with externals tools to gather or work with data
+
+<br><br>
+
+## Browsing
+- If we would need exact & correct data about something like e.g. the question would be "Collect informations about Scale AI and it's founding round. When they happend (date), the amount, and the valuation. Organize into ma table" then we would need the help of a browser to gather this data.
+  - So e.g. chat gpt will aswell use bing to search something collect the results, analayze the results and then return the response
+
+  - Maybe some values can not be fullfilled as the valuation because the answers can not be found while browsing the web. In this case we can ask the LLM to roughly guess/impute the values
+    - This means if we as human would get an answer we may calculate the correct answer by adding some variables to get the total amount.
+      - The LLM will do the same and calculate the ratios instead of guessing
+       - E.g. you would ask the LLM "Lets try to roughly guess/impute the valuation for Series A and B based on the ratios we see in Seris C, D, E of raised valuation" because in the first response the LLM was not able to provides of values for Series A & B.
+
+<br><br>
+
+## Python
+- Related to the example from above if we would collect data from browsing then we may want to work with this data like e.g. "Organize this data into a 2D plot. The x-axis is the data and the y-axis is the valuation of Scale ai.. ue a logarithmic scale fot the y-axis and make it very nice, professional plot and use grid lines".
+  - Now Chat GPT would use python as helper tool within the library plot lib to solve this and graph the data.
