@@ -318,3 +318,98 @@ ___________________________________
 ## Python
 - Related to the example from above if we would collect data from browsing then we may want to work with this data like e.g. "Organize this data into a 2D plot. The x-axis is the data and the y-axis is the valuation of Scale ai.. ue a logarithmic scale fot the y-axis and make it very nice, professional plot and use grid lines".
   - Now Chat GPT would use python as helper tool within the library plot lib to solve this and graph the data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___________________________________
+___________________________________
+<br><br>
+<br><br>
+
+
+# Thinking system
+- There are basicly 2 types of thinking when you would answer an question.
+
+<br><br>
+
+## System 1 Thinking (Instinctive & faster)
+- E.g. imagine I would ask you the question what is 2 + 2 then:
+	- You would directly say 4 because the answered is cached in your memory and you more instinctive answer this question
+```
+quick, instinctive, automatic, emotional, little/ no effort && un conscious
+```
+
+<br><br>
+
+## System 2 Thinking (Rational & slower)
+- E.g. imagine I would ask you the question what is 17x24 then:
+  - The answer would not be ready as related to System 1 thinking and you would engange a different part of your brain to solve the question which is more rational and slower. So you would have to workout the problem in your head
+
+```
+conscious, rational, slower, complex decisions, more logical, effortful
+```
+
+<br><br>
+
+### Other examples
+- Other example would be speed chess
+  - System 1 Thinking: Generates the proposals (used in speed chess)
+  - System 2 Thinking: Keeps track of the tree (used in competitions)
+    - You will think more about every possible solution to find the best tactic for the current situation
+
+
+<br><br>
+
+### LLM currently only have System 1 Thinking
+- LLM's to this moment only have System 1 thinking and they only have the instinctive part because the can not think and reason through like a tree of possibilities or complex thinking likein system 2.
+  - They just have words that enter in the sequence. So chunk for chunk to the next word
+    - Each of these chunks takes roughly the same amount of time
+
+<br><br>
+
+### Future
+- In future LLM may be able to use system 2 thinking but for the moment none of those is capable.
+  - So e.g. you would ask the llm "Give me the best answer how I could impress my girlfriend. Take 30 minute time and think about the best possible answer"
+    - So to achieve this we would have to be able of tree thinking to think through a problem. Like reflect and rephrase and then come back with an answer
