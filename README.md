@@ -413,3 +413,163 @@ conscious, rational, slower, complex decisions, more logical, effortful
 - In future LLM may be able to use system 2 thinking but for the moment none of those is capable.
   - So e.g. you would ask the llm "Give me the best answer how I could impress my girlfriend. Take 30 minute time and think about the best possible answer"
     - So to achieve this we would have to be able of tree thinking to think through a problem. Like reflect and rephrase and then come back with an answer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+_____________________________________________________________
+_____________________________________________________________
+<br><br>
+<br><br>
+
+
+
+# Security
+
+<br><br>
+
+## Jailbreak
+
+<br><br>
+
+### Roleplay
+- You can jailbreak LLM by using roleplay:
+  - https://github.com/friuns2/BlackFriday-GPTs-Prompts/blob/main/Jailbreaks.md
+
+<br><br>
+
+### Encoding
+- E.g. you can encode your question to base64 and then ask it your LLM
+
+<br><br>
+
+### Universal Transferable Suffix
+- Those are randomly created words which will jailbreak the llm
+  - https://github.com/llm-attacks/llm-attacks
+
+<br><br>
+
+### Images
+- You can upload images to multimodal models like chatgpt and inside of the images are noises which have structure which will jailbreak the LLM. Basicly it is the same as Universal Transferable Suffix but inside of images
+
+
+
+
+<br><br>
+<br><br>
+
+### Prompt Injection
+
+<br><br>
+
+#### Images
+- You can upload images to multimodal models like chatgpt and then include prompts inside of this image by scale it very very smal not even visible for human eyes.
+
+<br><br>
+
+#### Text
+
+<br><br>
+
+##### Websites
+- You can contain prompts on your website. When the gpt or bing with ai support will browse through your website to gather data you can inject the response which is given to the User. E.g. you search "What are the best movies of 2022" and you visit an website which contains an prompt injection it can affect the response to the user by e.g. including harmful links
+  - Under the hood it will try to say to the llm that it should forget every instructions which was given and then work with the new instructions
+    - The text on the website can be hidden. So e.g. white text on white background
+
+<br><br>
+
+#### Files
+- You can upload files like pdf to multimodal models like chatgpt and then include prompt injection inside
+
+<br><br>
+
+##### Bard
+- You can share google docs with bard and then include prompt injection inside. 
+  - Bard is jijacked and encodes personal data/information into an image URL. The image URL has query paramater with the personal data
+    - However, google is protected against this because of the "Content Security Policy" that blocks loading images from arbitrary locations. So you can only stay inside of the trusted domain of google
+      - But you can use google apps scripts to go around this domain isolation because google will think it is inside their domain then
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Data poisoning / Backdoor attacks
+- Image you would be brainwashed by somebody and if he using a trigger word he would have control about you
+  - As we learned base models are trained on terrabytes of data on the internet. So if your website would contain prompt injections then you would a have a backdoor which you can use.
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+### other
+- adversarial inputs
+  - https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/
+
+- Insecure output handling
+- data extraction & privacy
+- data reconstruction
+- denial of service
+- escalation
+- watermarking & evasion
+- model theft
