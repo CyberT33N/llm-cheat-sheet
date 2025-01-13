@@ -2,10 +2,130 @@
 
 <br><br>
 
-## Guides
+# Guides
 - https://www.youtube.com/watch?v=zjkBMFhNj_g
 
+
+
+
+
+# **Modellgrößen und Ressourcenanforderungen**
+
+```markdown
+| Modellgröße (Parameter) | CPU-Anforderungen         | GPU-Anforderungen               | VRAM (RAM für GPU)   | RAM (für CPU)   | Bemerkungen                                       |
+|-------------------------|---------------------------|---------------------------------|----------------------|-----------------|--------------------------------------------------|
+| **7B**                   | 8-16 CPU-Kerne, 16 GB RAM | 1 GPU (z. B. RTX 3090)          | 16-24 GB             | 32-64 GB        | Für grundlegende Inferenz auf einer guten GPU.   |
+| **13B**                  | 16-32 CPU-Kerne, 32 GB RAM| 1 GPU (z. B. RTX A6000)         | 24-32 GB             | 64-128 GB       | Leicht erhöhte Anforderungen.                   |
+| **30B**                  | 32-64 CPU-Kerne, 64 GB RAM| 1-2 GPUs (z. B. A100, V100)     | 40-60 GB             | 128-256 GB      | Hohe Anforderungen, für größere Aufgaben.        |
+| **33B**                  | 32-64 CPU-Kerne, 64 GB RAM| 2-4 GPUs (z. B. A100, V100)     | 60-80 GB             | 128-256 GB      | Sehr hohe GPU- und RAM-Anforderungen.           |
+| **175B** (z. B. GPT-3)   | 64+ CPU-Kerne, 128+ GB RAM| 8+ GPUs (z. B. A100s)           | 350-500 GB           | 256-512 GB      | Sehr große Modelle, benötigt Cluster von GPUs.   |
+| **Trillion+**            | 128+ CPU-Kerne, 256+ GB RAM| Dutzende GPUs (z. B. A100s oder H100s)| 1 TB+               | 512 GB - 1 TB   | Extrem große Modelle, High-Performance Computing erforderlich. |
+```
+
+- NVIDIA GeForce RTX 4090 hat 24 GB GDDR6X VRAM
+
+
+### **Erklärung:**
+- **Parameterzahl (z.B., 7B, 33B, 175B):** Je größer das Modell, desto mehr Parameter hat es und desto leistungsfähigere Hardware wird benötigt.
+- **CPU-Anforderungen:** Die Anzahl der CPU-Kerne, die benötigt werden, hängt von der Modellgröße ab. Größere Modelle erfordern eine höhere Anzahl von CPU-Kernen, da sie mehr Berechnungen gleichzeitig durchführen müssen.
+- **GPU-Anforderungen:** Große Modelle wie 33B oder 175B benötigen oft mehrere GPUs, da eine einzelne GPU mit der erforderlichen VRAM-Kapazität und Rechenleistung nicht ausreicht.
+- **VRAM:** Für die Inferenz eines Modells ist der VRAM (Video RAM) entscheidend. Je größer das Modell, desto mehr VRAM ist erforderlich, um das Modell vollständig zu laden und zu verwenden.
+- **RAM für CPU:** Die Menge an RAM, die für die CPU benötigt wird, steigt ebenfalls mit der Modellgröße. Große Modelle benötigen ausreichend RAM, um die Daten zwischen der CPU und der GPU auszutauschen.
+
+### **Hinweise:**
+- Diese Werte sind nur Schätzungen. Der tatsächliche Bedarf kann je nach Modellarchitektur und Nutzung variieren.
+- Für **Feinabstimmung** (Training) werden wesentlich mehr Ressourcen benötigt als für **Inferenz** (Bereitstellung des Modells).
+- **Quantisierung** von Modellen (z. B. auf 8-Bit oder 4-Bit) kann den VRAM-Bedarf erheblich reduzieren.
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
+
+
+
+
+
+
+
+## **Quantisierung**
+- ist der Prozess, bei dem die Genauigkeit der Zahlen, die in einem Modell verwendet werden, reduziert wird, um den Speicherbedarf und die Berechnungsanforderungen zu verringern. Dies ist besonders nützlich, wenn man große Modelle auf Hardware mit begrenztem Speicher (wie GPUs mit weniger VRAM) ausführen möchte.
+
+### **Wie funktioniert Quantisierung?**
+
+1. **Reduzierung der Präzision**:
+   - Modelle verwenden normalerweise **32-Bit-Fließkommazahlen (float32)** für Berechnungen und Speichern von Parametern. Bei der Quantisierung werden diese auf **weniger Bits** reduziert:
+     - **int8 (8-Bit Ganzzahlen)**: Eine der gängigsten Quantisierungsarten, bei der die Modellparameter auf 8-Bit-Werte reduziert werden.
+     - **int4 (4-Bit Ganzzahlen)**: Eine noch kleinere Darstellung, die den Speicherbedarf erheblich reduziert, aber auch die Genauigkeit und Rechenleistung verringern kann.
+     - **float16 (16-Bit Fließkomma)**: Eine moderate Reduzierung von float32, die oft in der Praxis verwendet wird, um die Speicheranforderungen zu senken, ohne die Leistung signifikant zu beeinträchtigen.
+
+2. **Weniger Bits → Weniger Speicher**:
+   - Ein Modell, das mit **int8** quantisiert wurde, benötigt nur ein Achtel des Speicherplatzes im Vergleich zu einem **float32**-Modell, wodurch du mehr Parameter in den VRAM laden kannst.
+
+3. **Präzisionsverlust**:
+   - Der Hauptnachteil der Quantisierung ist der **Verlust an Präzision**. Die reduzierten Bits können zu geringfügigen Genauigkeitsverlusten führen, was sich auf die Leistung des Modells auswirken kann, insbesondere bei sehr großen Modellen oder komplexen Aufgaben.
+   - Allerdings sind **int8** und **float16**-Quantisierung bei vielen Aufgaben (insbesondere bei Inferenz) gut geeignet, da der Verlust an Genauigkeit oft minimal ist und die Leistung bei weitem den Vorteil der Speicherersparnis überwiegt.
+
+### **Vorteile der Quantisierung:**
+- **Reduzierter VRAM-Bedarf**: Weniger Speicher für Modellparameter, sodass du größere Modelle auf Hardware mit begrenztem Speicher (wie GPUs mit weniger VRAM) ausführen kannst.
+- **Schnellere Inferenz**: Geringere Genauigkeit bedeutet auch geringeren Rechenaufwand, was zu einer schnelleren Ausführung des Modells führen kann.
+- **Geringerer Stromverbrauch**: Weniger genaue Berechnungen benötigen weniger Rechenleistung und können den Energieverbrauch senken.
+
+### **Anwendungsbeispiele:**
+- **Deep Learning-Modelle** wie **LLMs** (wie GPT-3, BERT) werden oft mit **float16** oder **int8** quantisiert, um die Speicheranforderungen zu reduzieren und die Verarbeitungsgeschwindigkeit zu erhöhen, ohne die Leistung signifikant zu beeinträchtigen.
+  
+### **Beispiel:**
+- **Modell ohne Quantisierung**: 
+  - Parameter werden in **float32** gespeichert.
+  - Ein 7B-Modell benötigt möglicherweise 12-16 GB VRAM.
+  
+- **Modell mit Quantisierung (z. B. int8)**:
+  - Parameter werden in **int8** gespeichert.
+  - Dasselbe 7B-Modell könnte nur **3-4 GB VRAM** benötigen, was es auf weniger leistungsfähigen GPUs wie der RTX 3090 mit 24 GB VRAM handhabbar macht.
+
+### **Fazit:**
+Quantisierung ist eine effektive Methode, um den VRAM-Bedarf von großen Modellen zu senken, insbesondere für Inferenzaufgaben. Sie reduziert den Speicherverbrauch, ermöglicht die Ausführung auf Geräten mit weniger VRAM und kann die Rechenleistung optimieren, jedoch mit einem gewissen Präzisionsverlust, der in vielen Anwendungen jedoch vernachlässigbar ist.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
 
 # Structure
 - E.g. llama-2-70b
@@ -74,7 +194,9 @@ ___________________________________________
 <br><br>
 
 
-## Traing Steps
+# Traing Steps
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
@@ -148,7 +270,7 @@ ___________________________________________
 
 
 
-
+</details>
 
 
 
