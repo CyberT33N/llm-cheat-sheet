@@ -24,6 +24,8 @@ ___
 
 # **Modellgrößen und Ressourcenanforderungen**
 
+<details><summary>Click to expand..</summary>
+
 ```markdown
 | Modellgröße (Parameter) | CPU-Anforderungen         | GPU-Anforderungen               | VRAM (RAM für GPU)   | RAM (für CPU)   | Bemerkungen                                       |
 |-------------------------|---------------------------|---------------------------------|----------------------|-----------------|--------------------------------------------------|
@@ -52,6 +54,23 @@ ___
 
 
 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -76,6 +95,9 @@ ___
 
 ## **Quantisierung**
 - ist der Prozess, bei dem die Genauigkeit der Zahlen, die in einem Modell verwendet werden, reduziert wird, um den Speicherbedarf und die Berechnungsanforderungen zu verringern. Dies ist besonders nützlich, wenn man große Modelle auf Hardware mit begrenztem Speicher (wie GPUs mit weniger VRAM) ausführen möchte.
+
+
+<details><summary>Click to expand..</summary>
 
 ### **Wie funktioniert Quantisierung?**
 
@@ -158,6 +180,130 @@ Wenn es darum geht, **effizient bessere Coding-Ergebnisse** zu erzielen, solltes
 - **Für anspruchsvollere, komplexere Aufgaben**: **33B mit Quantisierung** (achte auf den potenziellen Präzisionsverlust, der je nach Aufgabe mehr oder weniger relevant sein kann).
 
 Du kannst auch einen **Hybridansatz** in Erwägung ziehen: Verwende das **7B-Modell** für schnellere, alltägliche Aufgaben und das **33B-Modell mit Quantisierung** für tiefere, komplexe Aufgaben.
+
+
+
+</details>
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+
+
+## GGUF & GPTQ Explained
+- https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GGUF
+- https://huggingface.co/TheBloke/deepseek-coder-6.7B-instruct-GPTQ
+
+<details><summary>Click to expand..</summary>
+
+## **1. GPTQ**
+**What is it?**  
+GPTQ stands for **"Quantized GPT"**, a method to reduce the size of large language models without significantly impacting performance. It achieves this by lowering the precision of the model's weights (e.g., from 16-bit to 4-bit).
+
+### **How it works:**
+- **Quantization**: GPTQ converts the model's parameters (weights) into lower precision (like 4-bit or 8-bit instead of 16-bit).
+- **Benefit**: Uses less memory and is faster during inference. Ideal for machines with limited GPU/CPU resources.
+
+### **When to use it?**
+- When running models on consumer GPUs (like 8GB or 24GB VRAM GPUs) or on devices with limited memory.
+- GPTQ is optimized for inference, not training.
+
+---
+
+## **2. GGUF**
+**What is it?**  
+GGUF is a **file format** for running quantized language models, optimized for speed and compatibility with tools like Llama.cpp. It’s designed for ultra-efficient deployment of large language models on a variety of devices, including CPUs.
+
+### **Key features:**
+- **Unified format**: GGUF simplifies model deployment across platforms (e.g., Windows, Linux, macOS).
+- **High efficiency**: Models stored in GGUF are highly optimized for low-resource environments.
+- **Portability**: Works well for both GPU and CPU-based inference.
+
+### **When to use it?**
+- For running quantized models on CPUs or lightweight systems.
+- When working with frameworks like Llama.cpp that prioritize efficiency.
+
+---
+
+## **Comparison Table**
+
+| **Feature**           | **GPTQ**                           | **GGUF**                           |
+|------------------------|-------------------------------------|-------------------------------------|
+| **Purpose**            | Model quantization (4-bit, 8-bit)  | Efficient deployment format         |
+| **Usage**              | GPU-based inference               | CPU or lightweight inference        |
+| **Efficiency**         | Memory-efficient GPU inference    | Optimized for minimal resources     |
+| **Frameworks**         | Hugging Face Transformers, PyTorch| Llama.cpp, similar lightweight tools|
+
+---
+
+### Why use these?
+Both GPTQ and GGUF make it easier to run large models on devices with limited hardware resources, enabling faster and more accessible AI applications.
+
+</details>
+
+
+
+
+
+<br><br>
+<br><br>
+
+### Vergleich: **Selber quantisieren vs. fertige Modelle nutzen**
+
+<details><summary>Click to expand..</summary>
+
+#### **1. Fertige GGUF/GPTQ-Modelle nutzen**
+**Vorteile:**
+- **Einfachheit**: Kein Aufwand für die Quantisierung. Du kannst das Modell direkt laden und loslegen.
+- **Erprobt**: Solche Modelle wurden bereits optimiert und getestet, was mögliche Fehler und Inkompatibilitäten minimiert.
+- **Zeitersparnis**: Quantisierung kann ressourcen- und zeitaufwändig sein, vor allem bei großen Modellen.
+- **Portabilität**: Formate wie GGUF sind bereits für Tools wie Llama.cpp optimiert, sodass du dich auf die Nutzung konzentrieren kannst.
+
+**Nachteile:**
+- **Weniger Kontrolle**: Du bist auf die von anderen bereitgestellten Parameter angewiesen (z. B. 4-bit/8-bit). Anpassungen sind begrenzt.
+- **Modell-Abhängigkeit**: Wenn es dein gewünschtes Modell nicht als GGUF/GPTQ gibt, musst du entweder darauf warten oder selbst tätig werden.
+
+---
+
+#### **2. Selbst quantisieren (z. B. mit vLLM, Transformers, oder GPTQ-Skripten)**
+**Vorteile:**
+- **Flexibilität**: Du kannst die Quantisierung an deine spezifischen Anforderungen anpassen (z. B. 4-bit, 8-bit, sparsity, etc.).
+- **Breitere Auswahl**: Jedes Modell, das nicht vorquantisiert verfügbar ist, kannst du selbst bearbeiten.
+- **Feinabstimmung möglich**: Du kannst experimentieren und die Leistung besser an deine Hardware oder Aufgaben anpassen.
+
+**Nachteile:**
+- **Komplexität**: Der Prozess ist technisch anspruchsvoll und fehleranfällig, besonders bei großen Modellen.
+- **Ressourcenbedarf**: Quantisierung erfordert erhebliche Hardware- und Zeitressourcen. Für sehr große Modelle kann dies problematisch sein.
+- **Performance-Risiko**: Falsch durchgeführte Quantisierung kann die Genauigkeit oder Leistung des Modells beeinträchtigen.
+
+---
+
+### **Wann sollte man was machen?**
+
+| **Szenario**                        | **Empfehlung**                                  |
+|-------------------------------------|------------------------------------------------|
+| **Du hast wenig Zeit oder Ressourcen** | Fertige GGUF/GPTQ-Modelle nutzen              |
+| **Dein Modell existiert schon als GGUF/GPTQ** | Fertige Modelle bevorzugen                    |
+| **Du brauchst volle Kontrolle**     | Selbst quantisieren                            |
+| **Modell ist nicht vorquantisiert verfügbar** | Selbst quantisieren oder Quantisierungsskripte nutzen |
+| **Experimentieren mit verschiedenen Quantisierungs-Methoden** | Selbst quantisieren                            |
+
+---
+
+### **Empfehlung für die meisten Nutzer**
+Wenn ein fertiges GGUF/GPTQ-Modell für deine Anforderungen existiert, nutze es! Der Aufwand und die Risiken, die mit der manuellen Quantisierung verbunden sind, lohnen sich nur, wenn du spezielle Anpassungen brauchst oder das Modell nicht verfügbar ist.
+
+
+</details>
+
+
+
 
 
 
