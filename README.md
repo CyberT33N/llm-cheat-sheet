@@ -317,6 +317,96 @@ Wenn ein fertiges GGUF/GPTQ-Modell für deine Anforderungen existiert, nutze es!
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
+
+
+# LangChain
+
+
+LangChain ist ein Framework für den Aufbau von Anwendungen, die auf Large Language Models (LLMs) basieren. Es bietet eine modulare Struktur, um komplexe KI-Workflows zu gestalten, die auf Sprachmodellen wie GPT-4 basieren, und kombiniert diese Modelle mit externen Datenquellen, Tools oder Interaktionsmöglichkeiten.
+
+### Kernkomponenten von LangChain:
+1. **Prompt-Management**: Tools, um komplexe Prompts zu erstellen, anzupassen und zu optimieren. Es erlaubt auch die Verwendung von dynamischen Prompts, die sich basierend auf Eingaben ändern.
+
+2. **Speicher (Memory)**: Ermöglicht LLMs, sich an frühere Konversationen oder Zustände zu erinnern, was nützlich für Chatbots, persönliche Assistenten oder interaktive Anwendungen ist.
+
+3. **Datenverknüpfung**: Integration von LLMs mit externen Datenbanken, APIs oder Wissensbasen, um Modelle mit aktuellen oder domänenspezifischen Informationen zu versorgen.
+
+4. **Ketten (Chains)**: Workflows, die mehrere Schritte kombinieren, z. B.:
+   - Verarbeitung einer Benutzereingabe
+   - Abfragen einer Datenquelle
+   - Verknüpfen mit einem Sprachmodell
+   - Rückgabe eines dynamischen Ergebnisses
+
+5. **Agenten**: KI-Systeme, die eigenständig Entscheidungen treffen, indem sie auf externe Tools zugreifen (z. B. Webscraping, APIs) oder logisch mehrere Aktionen kombinieren.
+
+6. **Werkzeuge (Tools)**: Integration mit Bibliotheken wie Python-Code-Executor, WolframAlpha, Datenbanken oder APIs, um die Fähigkeiten des Modells zu erweitern.
+
+### Anwendungsbereiche:
+- **Chatbots und virtuelle Assistenten**: Systeme, die Benutzeranfragen verstehen und in Echtzeit darauf reagieren können.
+- **Automatisierung**: Bots, die Workflows in Unternehmen optimieren, wie Kundensupport oder Datenanalyse.
+- **Datenabruf (Retrieval-Augmented Generation)**: Verknüpfung von LLMs mit Wissensquellen wie Vektordatenbanken (z. B. Pinecone, Weaviate), um präzisere Antworten zu generieren.
+- **Interaktive Dokumentenerstellung**: KI-generierte Inhalte basierend auf benutzerdefinierten Eingaben.
+
+LangChain vereinfacht die Kombination von LLMs mit anderen Technologien, wodurch Entwickler skalierbare, dynamische und leistungsstarke KI-Anwendungen bauen können. Es wird häufig in Python und JavaScript/TypeScript genutzt.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ___
