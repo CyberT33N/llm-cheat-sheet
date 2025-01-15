@@ -79,6 +79,7 @@ ___
 
 
 
+
 <br><br>
 <br><br>
 ___
@@ -311,6 +312,100 @@ Wenn ein fertiges GGUF/GPTQ-Modell für deine Anforderungen existiert, nutze es!
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
+
+
+
+
+
+
+
+
+
+
+Ein **RAG (Retrieval-Augmented Generation)** ist eine Methode in der künstlichen Intelligenz, die **Textgenerierung** mit **Informationsabruf** kombiniert, um präzisere und kontextbezogene Antworten zu liefern. Es ist besonders nützlich, wenn ein Sprachmodell (wie GPT) Zugriff auf externe Wissensquellen benötigt, um auf spezifische oder aktuelle Fragen zu antworten. 
+
+### Aufbau und Funktionsweise eines RAG-Modells:
+
+1. **Retrieval (Abruf):**
+   - Ein externer Informationsspeicher (z. B. eine Datenbank, ein Dokumentenindex oder das Internet) wird genutzt, um relevante Informationen basierend auf einer Anfrage abzurufen.
+   - Tools wie **Elasticsearch**, **FAISS** oder **Pinecone** werden häufig verwendet, um Informationen effizient zu durchsuchen.
+
+2. **Augmentation (Anreicherung):**
+   - Die abgerufenen Informationen werden an ein Sprachmodell (wie GPT-3, T5 oder ähnliche) weitergeleitet, das sie nutzt, um eine fundierte und kontextbezogene Antwort zu generieren.
+
+3. **Generation (Generierung):**
+   - Das Sprachmodell kombiniert die abgerufenen Daten mit seiner eigenen Wissensbasis, um eine finale Antwort zu generieren.
+   - Dies kann Antworten präziser machen, da das Modell nicht ausschließlich auf seinem trainierten Wissen basiert, sondern auch aktuelle oder spezifische Daten einbezieht.
+
+---
+
+### Beispiel für einen RAG-Workflow:
+Angenommen, du fragst: **„Was sind die neuesten Ergebnisse der KI-Forschung von 2025?“**
+
+1. **Retrieval:**
+   - Das RAG-Modell durchsucht eine aktuelle Datenbank oder Publikationsplattform (wie Arxiv oder Hugging Face) nach relevanten Artikeln.
+
+2. **Augmentation:**
+   - Die abgerufenen Informationen (z. B. ein Abstract oder ein Dokument) werden dem Sprachmodell als Kontext hinzugefügt.
+
+3. **Generation:**
+   - Das Modell generiert eine präzise Antwort wie:  
+     *„Laut einem Artikel von Januar 2025 auf Arxiv wurde ein neues Modell entwickelt, das...“*
+
+---
+
+### Vorteile von RAG
+- **Aktualität:** RAG kann aktuelle und spezifische Informationen nutzen, auch wenn das Sprachmodell nicht darauf trainiert wurde.
+- **Effizienz:** Das Abrufen relevanter Informationen spart Speicherplatz und Rechenressourcen im Vergleich zu Modellen, die "alles wissen" müssen.
+- **Flexibilität:** Es eignet sich für Anwendungen wie FAQ-Systeme, Support-Bots oder Recherchetools.
+
+---
+
+### Häufige Anwendungen
+- **Kundensupport:** Dynamische Beantwortung von Fragen basierend auf Produktdokumentation.
+- **Wissenschaft:** Automatisierte Recherche zu Fachthemen.
+- **Business Intelligence:** Analyse von großen Datenmengen mit intelligenter Generierung von Berichten.
+- **Chatbots mit Wissenserweiterung:** Systeme wie ChatGPT, die mit externen Quellen kombiniert werden.
+
+RAG ist besonders kraftvoll, wenn ein Modell mit **großen Datenmengen** und **aktuellen Informationen** arbeiten muss.
 
 
 
