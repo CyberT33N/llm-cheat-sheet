@@ -10,6 +10,58 @@
 
 
 
+
+
+
+
+<br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
+
+# Runtime
+
+<br><br>
+
+## llama.cpp
+- https://github.com/CyberT33N/llama.cpp-cheat-sheet/blob/main/README.md
+
+<br><br>
+
+## LM Studio
+
+
+<br><br>
+
+## Jan
+
+
+<br><br>
+
+## vLLM
+- https://github.com/CyberT33N/vllm-cheat-sheet/blob/main/README.md
+
+<br><br>
+
+## Ollama
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ___
