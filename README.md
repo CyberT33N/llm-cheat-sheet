@@ -53,7 +53,7 @@ ___
 <br><br>
 
 ## Ollama
-
+- https://github.com/CyberT33N/ollama-cheat-sheet
 
 
 
