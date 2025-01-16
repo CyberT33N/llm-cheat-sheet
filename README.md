@@ -26,6 +26,12 @@ ___
 
 <br><br>
 
+## Ollama (Recommended)
+- https://github.com/CyberT33N/ollama-cheat-sheet
+- GUI ❌
+
+<br><br>
+
 ## llama.cpp
 - https://github.com/CyberT33N/llama.cpp-cheat-sheet/blob/main/README.md
 - Local API Server ✅
@@ -50,10 +56,6 @@ ___
 ## vLLM
 - https://github.com/CyberT33N/vllm-cheat-sheet/blob/main/README.md
 
-<br><br>
-
-## Ollama
-- https://github.com/CyberT33N/ollama-cheat-sheet
 
 
 
