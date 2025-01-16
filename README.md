@@ -28,16 +28,22 @@ ___
 
 ## llama.cpp
 - https://github.com/CyberT33N/llama.cpp-cheat-sheet/blob/main/README.md
+- Local API Server ✅
+- GUI ❌
+
 
 <br><br>
 
 ## LM Studio
+- GUI ✅
 
 
 <br><br>
 
 ## Jan
 - https://github.com/CyberT33N/jan-cheat-sheet/blob/main/README.md
+- Local API Server ✅
+- GUI ✅
 
 <br><br>
 
