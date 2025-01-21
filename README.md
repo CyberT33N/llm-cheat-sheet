@@ -24,6 +24,8 @@ ___
 
 # Runtime
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 ## Ollama (Recommended)
@@ -55,6 +57,30 @@ ___
 
 ## vLLM
 - https://github.com/CyberT33N/vllm-cheat-sheet/blob/main/README.md
+
+
+
+
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -156,6 +182,8 @@ ___
 
 ## **Quantisierung**
 - ist der Prozess, bei dem die Genauigkeit der Zahlen, die in einem Modell verwendet werden, reduziert wird, um den Speicherbedarf und die Berechnungsanforderungen zu verringern. Dies ist besonders nützlich, wenn man große Modelle auf Hardware mit begrenztem Speicher (wie GPUs mit weniger VRAM) ausführen möchte.
+
+
 
 
 <details><summary>Click to expand..</summary>
@@ -398,6 +426,95 @@ Wenn ein fertiges GGUF/GPTQ-Modell für deine Anforderungen existiert, nutze es!
 
 
 
+<br><br>
+<br><br>
+___
+___
+<br><br>
+<br><br>
+
+
+
+
+
+
+
+
+
+# Cache-Augmented Generation (CAG)
+
+<details><summary>Click to expand..</summary>
+
+## Grundprinzip
+- System speichert (cached) häufig angefragte Informationen und Antworten
+- Kombination aus Cache-System und LLM-Generierung
+
+## Funktionsweise
+```
+User-Frage
+↓
+Cache-Check
+  → Wenn im Cache: Direkte Antwort aus Cache
+  → Wenn nicht im Cache: 
+      1. Normale Suche in Dokumenten
+      2. LLM generiert Antwort
+      3. Speichern im Cache für künftige Anfragen
+```
+
+## Vorteile
+- Schnellere Antwortzeiten bei häufigen Fragen
+- Reduzierte Serverkosten
+- Konsistentere Antworten
+- Geringere Latenz
+
+## Nachteile
+- Cache-Verwaltung nötig
+- Speicherplatz für Cache erforderlich
+- Mögliche veraltete Antworten im Cache
+
+## Anwendungsfälle
+- FAQ-Systeme
+- Kundenservice
+- Dokumentationen
+- Wissensdatenbanken
+
+## Technische Komponenten
+- Cache-Speicher (z.B. Redis, Memcached)
+- Cache-Strategie (LRU, TTL etc.)
+- Retrieval-System
+- LLM für neue Anfragen
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -418,7 +535,9 @@ ___
 
 
 
+# RAG
 
+<details><summary>Click to expand..</summary>
 
 Ein **RAG (Retrieval-Augmented Generation)** ist eine Methode in der künstlichen Intelligenz, die **Textgenerierung** mit **Informationsabruf** kombiniert, um präzisere und kontextbezogene Antworten zu liefern. Es ist besonders nützlich, wenn ein Sprachmodell (wie GPT) Zugriff auf externe Wissensquellen benötigt, um auf spezifische oder aktuelle Fragen zu antworten. 
 
@@ -469,7 +588,7 @@ RAG ist besonders kraftvoll, wenn ein Modell mit **großen Datenmengen** und **a
 
 
 
-
+</details>
 
 
 
@@ -511,7 +630,8 @@ ___
 
 # LangChain
 
-
+<details><summary>Click to expand..</summary>
+	
 LangChain ist ein Framework für den Aufbau von Anwendungen, die auf Large Language Models (LLMs) basieren. Es bietet eine modulare Struktur, um komplexe KI-Workflows zu gestalten, die auf Sprachmodellen wie GPT-4 basieren, und kombiniert diese Modelle mit externen Datenquellen, Tools oder Interaktionsmöglichkeiten.
 
 ### Kernkomponenten von LangChain:
@@ -539,7 +659,7 @@ LangChain ist ein Framework für den Aufbau von Anwendungen, die auf Large Langu
 
 LangChain vereinfacht die Kombination von LLMs mit anderen Technologien, wodurch Entwickler skalierbare, dynamische und leistungsstarke KI-Anwendungen bauen können. Es wird häufig in Python und JavaScript/TypeScript genutzt.
 
-
+</details>
 
 
 
