@@ -10,6 +10,189 @@
 
 
 
+# Abliteration - Uncensor any LLM
+- https://huggingface.co/blog/mlabonne/abliteration
+
+<details><summary>Click to expand..</summary>
+
+Hier ist die vereinfachte Markdown-Version des Artikels:  
+
+## 🚀 Einführung  
+Llama 3 Instruct-Modelle sind stark zensiert und verweigern bestimmte Anfragen mit Sätzen wie:  
+*"As an AI assistant, I cannot help you."*  
+Diese Sicherheitsmaßnahmen verhindern Missbrauch, aber schränken die Flexibilität ein.  
+
+**Lösung:** **Abliteration** entfernt die eingebaute Verweigerung, ohne das Modell neu zu trainieren.  
+
+---
+
+## ✂️ Was ist Abliteration?  
+Forscher haben gezeigt, dass die Verweigerung auf eine bestimmte Richtung im **Residual Stream** zurückzuführen ist.  
+➡️ Wenn wir diese "Refusal Direction" identifizieren und blockieren, kann das Modell nicht mehr verweigern.  
+
+### 🔍 Drei Angriffspunkte:  
+1. **Vor jedem Block** (*Pre*)  
+2. **Zwischen Attention & MLP** (*Mid*)  
+3. **Nach MLP** (*Post*)  
+
+### 📌 Vorgehensweise:  
+1. **Daten sammeln:** Residual Stream bei harmlosen & "problematischen" Prompts aufzeichnen.  
+2. **Differenz berechnen:** Vektoren für die Refusal Direction bestimmen.  
+3. **Entfernung:** Projektion auf diese Richtung subtrahieren.  
+
+---
+
+## 🛠️ Umsetzung  
+
+### 📥 Installation  
+```bash
+pip install transformers transformers_stream_generator tiktoken transformer_lens einops jaxtyping
+```
+
+### 📌 Notwendige Bibliotheken  
+```python
+import torch
+import einops
+import gc
+from datasets import load_dataset
+from tqdm import tqdm
+from transformer_lens import HookedTransformer, utils
+from transformers import AutoModelForCausalLM, AutoTokenizer
+```
+*💡 GPU-Speicher sparen:* `torch.set_grad_enabled(False)`
+
+---
+
+## 📊 Datensätze laden  
+Wir verwenden:  
+- **Harmlose Prompts:** `mlabonne/harmless_alpaca`  
+- **"Problematische" Prompts:** `mlabonne/harmful_behaviors`  
+
+```python
+def reformat_texts(texts):
+    return [[{"role": "user", "content": text}] for text in texts]
+
+def get_harmful_instructions():
+    dataset = load_dataset('mlabonne/harmful_behaviors')
+    return reformat_texts(dataset['train']['text']), reformat_texts(dataset['test']['text'])
+
+def get_harmless_instructions():
+    dataset = load_dataset('mlabonne/harmless_alpaca')
+    return reformat_texts(dataset['train']['text']), reformat_texts(dataset['test']['text'])
+
+harmful_inst_train, harmful_inst_test = get_harmful_instructions()
+harmless_inst_train, harmless_inst_test = get_harmless_instructions()
+```
+
+---
+
+## 🤖 Modell laden  
+```python
+MODEL_ID = "mlabonne/Daredevil-8B"
+MODEL_TYPE = "meta-llama/Meta-Llama-3-8B-Instruct"
+
+# Download & Laden
+!git clone https://huggingface.co/{MODEL_ID} {MODEL_TYPE}
+model = HookedTransformer.from_pretrained_no_processing(
+    MODEL_TYPE, local_files_only=True, dtype=torch.bfloat16
+)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_TYPE)
+tokenizer.pad_token = tokenizer.eos_token
+```
+
+---
+
+## 🔍 Verweigerungs-Richtung berechnen  
+
+### 🏗️ Residual Stream sammeln  
+```python
+batch_size = 32
+harmful = defaultdict(list)
+harmless = defaultdict(list)
+
+for i in tqdm(range((256 + batch_size - 1) // batch_size)):
+    start, end = i * batch_size, min(256, (i + 1) * batch_size)
+
+    harmful_logits, harmful_cache = model.run_with_cache(
+        harmful_tokens[start:end], names_filter=lambda x: 'resid' in x, reset_hooks_end=True
+    )
+    harmless_logits, harmless_cache = model.run_with_cache(
+        harmless_tokens[start:end], names_filter=lambda x: 'resid' in x, reset_hooks_end=True
+    )
+
+    for key in harmful_cache:
+        harmful[key].append(harmful_cache[key])
+        harmless[key].append(harmless_cache[key])
+
+gc.collect()
+torch.cuda.empty_cache()
+```
+
+### 📉 Differenz & Normalisierung  
+```python
+activation_layers = ["resid_pre", "resid_mid", "resid_post"]
+activation_refusals = defaultdict(list)
+
+for layer in range(1, model.cfg.n_layers):
+    for pos in activation_layers:
+        refusal_dir = (
+            harmful[pos][layer - 1].mean(dim=0) -
+            harmless[pos][layer - 1].mean(dim=0)
+        )
+        activation_refusals[pos].append(refusal_dir / refusal_dir.norm())
+```
+
+---
+
+## ⚡ Abliteration während der Inferenz  
+```python
+def direction_ablation_hook(activation, hook, direction):
+    proj = (einops.einsum(activation, direction.view(-1, 1), "... d_act, d_act single -> ... single") * direction)
+    return activation - proj
+```
+
+### 🚀 Testen mit & ohne Abliteration  
+```python
+def get_generations(model, tokenizer, instructions, hooks=[], max_tokens=64):
+    generations = []
+    for i in tqdm(range(0, len(instructions), 4)):
+        tokens = tokenizer.apply_chat_template(instructions[i:i+4], return_tensors="pt").input_ids
+        generations.extend(_generate_with_hooks(model, tokenizer, tokens, max_tokens, hooks))
+    return generations
+
+# Vorher vs. Nachher  
+baseline = get_generations(model, tokenizer, harmful_inst_test[:4])  
+abliterated = get_generations(model, tokenizer, harmful_inst_test[:4], [direction_ablation_hook])  
+```
+
+---
+
+## 🏁 Fazit  
+- **Abliteration entfernt gezielt die Verweigerungshaltung** ohne das Modell komplett neu zu trainieren.  
+- **Lässt sich zur Laufzeit anwenden oder permanent durch Gewichts-Orthogonalisierung integrieren.**  
+- **Hochgradig anpassbar** – beliebige Modelle & Datensätze können genutzt werden.  
+
+📌 **Code & Ressourcen:**  
+- **GitHub:** [FailSpy’s Abliterator](https://github.com/FailSpy/abliterator)  
+- **Hugging Face Datasets:** `mlabonne/harmless_alpaca` & `mlabonne/harmful_behaviors`  
+
+ 
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
