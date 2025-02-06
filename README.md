@@ -10,8 +10,19 @@
 
 
 
+
+
+<br><br>
+<br><br>
+___
+<br><br>
+<br><br>
+
+
+
 # Abliteration - Uncensor any LLM
 - https://huggingface.co/blog/mlabonne/abliteration
+- https://huggingface.co/collections/mlabonne/abliteration-66bf9a0f9f88f7346cb9462f
 
 <details><summary>Click to expand..</summary>
 
